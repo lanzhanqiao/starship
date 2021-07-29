@@ -1,0 +1,21 @@
+{
+    "name": "starship/log",
+    "description": "first composer packagist",
+    "autoload": {
+        "psr-4": {
+            "Starship\\Log\\": "src/"
+        },
+        "files": ["src/helper.php"],
+        "classmap": ["src/Log.php"]
+    },
+    "authors": [
+        {
+            "name": "tern.lan",
+            "email": "tern.lan@huolala.cn"
+        }
+    ],
+    "require": {
+        "psr/log": "1.*",
+        "php": "~7.2"
+    }
+}
