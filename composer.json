@@ -1,5 +1,5 @@
 {
-    "name": "starship/log",
+    "name": "laravel_starship/log",
     "description": "first composer packagist",
     "autoload": {
         "psr-4": {
@@ -8,6 +8,7 @@
         "files": ["src/helper.php"],
         "classmap": ["src/Log.php"]
     },
+    "homepage": "https://github.com/lanzhanqiao/starship",
     "authors": [
         {
             "name": "tern.lan",
