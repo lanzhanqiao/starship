@@ -19,5 +19,6 @@
         "psr/log": "1.*",
         "php": "~7.2"
     },
+    "minimum-stability": "dev",
     "license": "MIT"
 }
