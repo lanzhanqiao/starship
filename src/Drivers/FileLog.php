@@ -71,7 +71,7 @@ class FileLog extends AbstractLogger
      */
     protected function getFile()
     {
-        is_dir($this->logDir) || @mkdir($this->logDir, 0777);
+        is_dir($this->logDir) || @mkdir($this->logDir, 0777, true);
 
         return $this->logDir.date("Y-m-d").'.log';
     }
