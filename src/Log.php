@@ -13,13 +13,18 @@ use Starship\Log\Drivers\FileLog;
 
 class Log
 {
-    public static function info($message)
+    static public function info($message)
     {
         FileLog::getSingleton()->info($message);
     }
 
-    public static function error($message)
+    static public function error($message)
     {
         FileLog::getSingleton()->error($message);
+    }
+
+    static public function flush()
+    {
+        FileLog::getSingleton()->flush();
     }
 }

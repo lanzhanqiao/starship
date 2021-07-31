@@ -11,14 +11,21 @@ use Psr\Log\AbstractLogger;
 
 class FileLog extends AbstractLogger
 {
-    public $error = [];
+    protected $messages = [];
+    public $logDir = './runtime/logs/';
 
     static private $instance = null;
 
     private function __construct()
     {
+        register_shutdown_function([$this, 'flush']);
     }
 
+    /**
+     * 获取单例
+     *
+     * @return FileLog|null
+     */
     static public function getSingleton()
     {
         if (!self::$instance instanceof self) {
@@ -30,13 +37,43 @@ class FileLog extends AbstractLogger
 
     public function log($level, $message, array $context = array())
     {
-        $this->error[] = [
-            'level' => $level,
-            'message' => $message,
-            'context' => $context,
-        ];
+        $this->messages[] = $this->parseMessage(compact('level', 'message'));
+    }
 
-        var_dump($this->error);
+    /**
+     * 内容格式化
+     *
+     * @param $params
+     * @return string
+     */
+    protected function parseMessage($params)
+    {
+        return date("Y-m-d H:i:s")."-----".$params['level']."-------".$params['message'];
+    }
+
+    /**
+     * 刷新日志到文件
+     */
+    public function flush()
+    {
+        if (empty($this->messages)) {
+            return;
+        }
+        $handle = fopen($this->getFile(), 'a+');
+        fwrite($handle, implode(PHP_EOL, $this->messages).PHP_EOL);
+        fclose($handle);
+        $this->messages = [];
+    }
+
+    /**
+     * 获取日志文件
+     * @return string
+     */
+    protected function getFile()
+    {
+        is_dir($this->logDir) || @mkdir($this->logDir, 0777);
+
+        return $this->logDir.date("Y-m-d").'.log';
     }
 
     private function __clone()
